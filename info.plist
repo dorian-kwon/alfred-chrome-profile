@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.dorian.chrome-profiles</string>
+	<key>connections</key>
+	<dict>
+		<key>ADF48F6B-9297-483F-A433-EDAACAE13B71</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D70945CC-FFC1-4A9E-B7DE-46690B348B7C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>dorian</string>
+	<key>description</key>
+	<string>Chrome 프로필을 Local State 에서 읽어 전환 (cp)</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Chrome Profiles</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>cp</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>export PATH=$JQ_PATH:$PATH
+
+source check-jq.sh
+
+source list_profiles.zsh
+
+echo $profile | jq -nR '{ "items":
+     [ inputs
+       | select(length&gt;0) as $name |
+       split("-") as $parts |
+       {
+       "uid": $name,
+        "title":$name | sub("-"; " "; "g") | sub("\\("; " "; "g") | sub("\\)"; " "; "g"),
+        "subtitle":$name,
+        "arg":$name,
+        "autocomplete":$name | sub("-"; " "; "g") | sub("\\("; " "; "g") | sub("\\)"; " "; "g")
+       }
+     ]}'
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>filter.zsh</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Switch Chrome profile</string>
+				<key>type</key>
+				<integer>8</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>ADF48F6B-9297-483F-A433-EDAACAE13B71</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+    do shell script "open -na 'Google Chrome' --args --profile-directory=" &amp; quoted form of q
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>D70945CC-FFC1-4A9E-B7DE-46690B348B7C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Run `cp` to switch to or open a different Google Chrome profile.</string>
+	<key>uidata</key>
+	<dict>
+		<key>ADF48F6B-9297-483F-A433-EDAACAE13B71</key>
+		<dict>
+			<key>xpos</key>
+			<real>80.0</real>
+			<key>ypos</key>
+			<real>115.0</real>
+		</dict>
+		<key>D70945CC-FFC1-4A9E-B7DE-46690B348B7C</key>
+		<dict>
+			<key>xpos</key>
+			<real>520.0</real>
+			<key>ypos</key>
+			<real>185.0</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>2.0.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
